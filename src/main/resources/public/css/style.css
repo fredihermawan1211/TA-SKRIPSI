@@ -1,0 +1,130 @@
+:root{
+    --putih: #FFFFFF;
+    --hitam: #000000;
+    --biru1: #2582ec;
+    --biru1op5: #2582ec98;
+
+    --sat-1: 5px;
+    --sat-2: 10px;
+
+    --sat-s1: 0.3s;
+    --sat-s2: 0.6s;
+    --sat-s3: 0.9s;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    color: var(--hitam);
+    text-decoration: none;
+}
+
+body{
+    background: var(--putih);
+    font-family: monospace;
+    overflow: hidden;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 0;
+  }
+  
+  /* Track */
+  /* ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  } */
+  
+  /* Handle */
+  /* ::-webkit-scrollbar-thumb {
+    background: #888;
+  } */
+  
+  /* Handle on hover */
+  /* ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  } */
+
+.area-main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.nav-menu{
+    width: 10%;
+    height: 100vh;
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    padding: 10px;
+    /* border: 2px solid var(--biru1op5); */
+    border-top: 0;
+    border-bottom: 0;
+    border-left: 0;
+    transition: var(--sat-s1);
+
+}
+
+.nav-menu h3{
+    color: var(--biru1op5);
+    text-align: center;
+    transition: var(--sat-s1);
+
+}
+
+.nav-menu button{
+    margin-bottom: var(--sat-1);
+    transition: var(--sat-s1);
+    background: transparent;
+    outline: 0;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+/* .nav-menu:hover{
+    box-shadow: 6px -3px 6px -6px var(--biru1);
+    border-color: var(--biru1);
+} */
+
+.nav-menu label{
+    transition: var(--sat-s1);
+    margin-bottom: 10px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 4px 8px -6px var(--hitam);
+}
+
+.nav-menu button, .nav-menu label,  .nav-menu h3{
+    color: var(--biru1op5);
+}
+
+.nav-menu:hover button,  .nav-menu:hover label, .nav-menu:hover h3{
+    color: var(--biru1);
+}
+
+.nav-menu button:hover::before{
+    content: "✔ ";
+}
+
+.menu-active{
+    color: var(--biru1) !important;
+}
+
+.menu-active::before{
+    content: "✔ ";
+}
+
+.section-content{
+    width: 100%;
+    height: 100vh;
+}
+
+.section-content iframe{
+    width: 100%;
+    height: 100vh;
+    border: none;
+}

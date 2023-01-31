@@ -1,0 +1,57 @@
+server:
+    port: 8080
+spring:
+    # Konfigurasi Properti Database
+    datasource:
+        # AWS 
+        # url: jdbc:mysql://localhost:3306/datbes_ponline?useSSL=false
+        # username: ponmaster
+        # password: pw.db.ponline
+        # Localhost
+        url: jdbc:mysql://localhost:3306/datbes_ponline?useSSL=false
+        username: root
+        password: 
+    # Konfigurasi Properti Email Sender
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: fredihermawan1211@gmail.com
+        password: fnhefcxmzuknzfmq
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
+    # Konfigurasi Properti JPA (spring.jpa)
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: update
+            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    # Konfigurasi Keamanan Program (spring.oauth2)
+    security:
+      oauth2:
+        client:
+          registration:
+            # Konfigurasi Client id & Secret Google Console
+            google:
+              clientId: 371012063788-tmgdcartpq5p3ht4mu1a79vjam9st1sv.apps.googleusercontent.com
+              clientSecret: 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
+              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+              scope:
+                - email
+                - profile
+app:
+  auth:
+    tokenSecret: PQOWNELRITNYEUSIEOCPRQEWTEKRETYYU # Base token untuk akses pengguna
+    tokenExpirationMsec: 86400000 # Token Kadalwarsa dalam 86400000 ms / 24 jam
+  oauth2:
+    authorizedRedirectUris:
+      - http://192.168.43.245:3000/oauth2/redirect
+      - http://localhost:8080/documentation
+      - myandroidapp://oauth2/redirect
+      - myiosapp://oauth2/redirect

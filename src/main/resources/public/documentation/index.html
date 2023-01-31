@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PONLNE-API DOCUMENTATION</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <main class="area-main">
+        <nav class="nav-menu">
+            <h3>API-D V1.1</h3><br>
+            <label>About System</label>
+            <button class="menu-active" id="btn_summary">Summary</button>
+            <br>
+
+            <label>How to use ?</label>
+            <button  id="btn_authentication"> Authentication</button>
+            <button  id="btn_authorization"> Authorization</button>
+            <button id="btn_user"> User</button>
+            <button id="btn_komunitas"> Komunitas</button>
+            <button id="btn_anggota"> Anggota</button>
+            <button id="btn_kolam"> Kolam</button>
+            <button id="btn_jadwal"> Jadwal</button>
+        </nav>
+        <div style="width: 13%;" class="devider-width-10"></div>
+        <section class="section-content">
+            <iframe  policy="SAMEORIGIN" id="frame_content" type="application/pdf" src="./archive/api-pon-doc-summary.pdf"></iframe>
+        </section>
+    </main>
+    <script>
+        const frame_content = document.getElementById("frame_content");
+
+        const btn_summary = document.getElementById("btn_summary");
+        const btn_authentication = document.getElementById("btn_authentication");
+        const btn_authorization = document.getElementById("btn_authorization");
+        const btn_user = document.getElementById("btn_user");
+        const btn_komunitas = document.getElementById("btn_komunitas");
+        const btn_anggota = document.getElementById("btn_anggota");
+        const btn_kolam = document.getElementById("btn_kolam");
+        const btn_jadwal = document.getElementById("btn_jadwal");
+
+        btn_summary.addEventListener("click", function(){
+            generateContent("./archive/api-pon-doc-summary.pdf")
+            addMark(btn_summary)
+        });
+
+        btn_authentication.addEventListener("click", function(){
+            generateContent("./archive/api-pon-doc-otentikasi.pdf")
+            addMark(btn_authentication)
+        });
+        btn_authorization.addEventListener("click", function(){
+            generateContent("./archive/api-pon-doc-otorisasi.pdf")
+            addMark(btn_authorization)
+        });
+        btn_user.addEventListener("click", function(){
+            generateContent("./archive/api-pon-doc-user.pdf")
+            addMark(btn_user)
+        });
+        btn_komunitas.addEventListener("click", function(){
+            generateContent("./archive/api-pon-doc-komunitas.pdf")
+            addMark(btn_komunitas)
+        });
+        btn_anggota.addEventListener("click", function(){
+            generateContent("./archive/api-pon-doc-anggota.pdf")
+            addMark(btn_anggota)
+        });
+        btn_kolam.addEventListener("click", function(){
+            generateContent("./archive/api-pon-doc-kolam.pdf")
+            addMark(btn_kolam)
+        });
+        btn_jadwal.addEventListener("click", function(){
+            generateContent("./archive/api-pon-doc-jadwal.pdf")
+            addMark(btn_jadwal)
+        });
+
+        function generateContent(path){
+            frame_content.src = path;
+        }
+
+        function addMark(button){
+            btn_summary.classList.remove("menu-active")
+            
+            btn_authentication.classList.remove("menu-active")
+            btn_authorization.classList.remove("menu-active")
+            btn_user.classList.remove("menu-active")
+            btn_komunitas.classList.remove("menu-active")
+            btn_anggota.classList.remove("menu-active")
+            btn_kolam.classList.remove("menu-active")
+            btn_jadwal.classList.remove("menu-active")
+
+            button.classList.add("menu-active")
+        }
+
+
+    </script>
+</body>
+</html>
