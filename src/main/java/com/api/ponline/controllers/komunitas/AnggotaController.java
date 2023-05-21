@@ -76,7 +76,7 @@ public class AnggotaController {
         Anggota anggota = new Anggota();
         anggota.setKomunitas(komunitas);
         anggota.setUser(user);
-        anggota.setStatusAnggota(StatusAnggota.RESMI);
+        anggota.setStatusAnggota(anggotaRequest.getStatusAnggota());
         responseData.setSuccess(true);
         responseData.setPayLoad(anggotaServices.save(anggota));
         return ResponseEntity.ok(responseData);       
@@ -106,6 +106,7 @@ public class AnggotaController {
         anggota.setId(anggotaRequest.getId());
         anggota.setKomunitas(komunitas);
         anggota.setUser(user);
+        anggota.setStatusAnggota(anggotaRequest.getStatusAnggota());
         responseData.setSuccess(true);
         responseData.setPayLoad(anggotaServices.save(anggota));
         return ResponseEntity.ok(responseData);       
@@ -138,37 +139,37 @@ public class AnggotaController {
         Anggota anggota = new Anggota();
         anggota.setKomunitas(komunitas);
         anggota.setUser(user);
-        anggota.setStatusAnggota(StatusAnggota.PENDING);
+        anggota.setStatusAnggota(anggotaRequest.getStatusAnggota());
         responseData.setSuccess(true);
         responseData.setPayLoad(anggotaServices.save(anggota));
         return ResponseEntity.ok(responseData);       
 
     }
 
-    @PostMapping("/update/status")
-    public ResponseEntity<ApiResponse> updateStatusAnggota(@Valid @RequestBody StatusAnggotaRequest statusAnggotaRequest, Errors errors){
-        // Siapkan objek kosong untuk di kembalikan
-        ApiResponse response = new ApiResponse(false, "Data Gagal Di perbarui");
+    // @PostMapping("/update/status")
+    // public ResponseEntity<ApiResponse> updateStatusAnggota(@Valid @RequestBody StatusAnggotaRequest statusAnggotaRequest, Errors errors){
+    //     // Siapkan objek kosong untuk di kembalikan
+    //     ApiResponse response = new ApiResponse(false, "Data Gagal Di perbarui");
         
-        // periksa jika ada error
-        if (!errors.hasErrors()) {
-            Anggota anggota = anggotaServices.findOne(statusAnggotaRequest.getAnggota().getId());
-            if (anggota!=null) {
-                anggota.setStatusAnggota(statusAnggotaRequest.getStatusAnggota());
-                anggotaServices.save(anggota);
-                response.setMessage("Data Berhasil Diperbarui");
-                response.setSuccess(true);
-                return ResponseEntity.ok(response); 
-            }else{
-                response.setMessage("Data Anggota tidak ditemukan");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            }
+    //     // periksa jika ada error
+    //     if (!errors.hasErrors()) {
+    //         Anggota anggota = anggotaServices.findOne(statusAnggotaRequest.getAnggota().getId());
+    //         if (anggota!=null) {
+    //             anggota.setStatusAnggota(statusAnggotaRequest.getStatusAnggota());
+    //             anggotaServices.save(anggota);
+    //             response.setMessage("Data Berhasil Diperbarui");
+    //             response.setSuccess(true);
+    //             return ResponseEntity.ok(response); 
+    //         }else{
+    //             response.setMessage("Data Anggota tidak ditemukan");
+    //             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    //         }
             
-        }else{
-            // kembalikan ApiResponse dengan pesan gagal dan kode error 500
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-    }
+    //     }else{
+    //         // kembalikan ApiResponse dengan pesan gagal dan kode error 500
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    //     }
+    // }
     
 
     // Endpoitn delete

@@ -8,6 +8,7 @@ import com.api.ponline.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,4 +23,17 @@ public class UserController {
         return userRepository.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }
+
+    // endpoin untuk mencari data
+    // contoh url (base_url/find/id/{idnya})
+    @GetMapping("/findUserById")
+    public User findOne(@RequestParam Long id) {
+        return userRepository.findOneById(id);
+    }
+
+     // enpoind untuk membaca semua data
+     @GetMapping
+     public Iterable<User> findAll(){
+         return userRepository.findAll();
+     }
 }

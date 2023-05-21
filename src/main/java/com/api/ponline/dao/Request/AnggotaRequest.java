@@ -16,6 +16,9 @@ public class AnggotaRequest {
     @NotNull(message = "User tidak boleh kosong")
     private User user;
 
+    @NotNull(message = "Status tidak boleh kosong")
+    private StatusAnggota statusAnggota;
+
     public Long getId() {
         return id;
     }
@@ -38,6 +41,15 @@ public class AnggotaRequest {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public StatusAnggota getStatusAnggota() {
+        return statusAnggota;
+    }
+
+
+    public void setStatusAnggota(StatusAnggota statusAnggota) {
+        this.statusAnggota = statusAnggota;
     }
 
 

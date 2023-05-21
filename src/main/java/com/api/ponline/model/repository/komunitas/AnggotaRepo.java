@@ -1,5 +1,6 @@
 package com.api.ponline.model.repository.komunitas;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -16,5 +17,13 @@ public interface AnggotaRepo extends CrudRepository<Anggota, Long>{
 
     // kueri cari anggota berdasarkan komunitas
     List<Anggota> findByKomunitas(Komunitas komunitas);
+
+    default List<Anggota> getAllAnggota(){
+        List<Anggota> result = new ArrayList<Anggota>();
+        for (Anggota anggota : findAll()) {
+            result.add(anggota);
+        }
+        return result;
+    }
     
 }
