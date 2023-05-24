@@ -14,6 +14,7 @@ public interface KomunitasRepo extends CrudRepository<Komunitas, Long>{
         for (Komunitas komunitas : this.findAll()) {
             result.add(komunitas);
         }
+        
         return result;
     }
     

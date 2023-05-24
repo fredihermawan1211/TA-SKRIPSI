@@ -25,7 +25,7 @@ spring:
             ssl.trust: smtp.gmail.com
     # Konfigurasi Properti JPA (spring.jpa)
     jpa:
-        show-sql: true
+        # show-sql: true
         hibernate:
             ddl-auto: update
             naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy

@@ -109,6 +109,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .hasAuthority("ROLE_OWNER")
                     .antMatchers("/komunitas/**", "/anggota/**", "/kolam/**", "/jadwal/**")
                         .hasAnyAuthority("ROLE_OWNER", "ROLE_EMPLOYEE", "ROLE_PQOWNEDRETVY")
+                    .antMatchers("/user/**")
+                        .hasAnyAuthority("ROLE_USER", "ROLE_OWNER", "ROLE_EMPLOYEE", "ROLE_PQOWNEDRETVY")
                     .anyRequest()
                         .authenticated()
                     .and()

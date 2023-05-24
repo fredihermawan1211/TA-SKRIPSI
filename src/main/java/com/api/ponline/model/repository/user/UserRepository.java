@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.api.ponline.model.Entity.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +36,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // (MANUAL)Query untuk cari user berdarakan email return 1 user
     @Query("SELECT u FROM User u WHERE u.id = :id")
     public User findOneById(@PathParam("id") Long id);
+
+    default List<User> getAllUsers(){
+        List<User> result = new ArrayList<User>();
+        
+        for (User anggota : findAll()) {
+            result.add(anggota);
+        }
+        return result;
+    }
 
     
 }

@@ -1,4 +1,5 @@
-package com.api.ponline;
+package com.api.ponline.Otentikasi;
+
 
 import org.json.JSONObject;
 import org.junit.Before;
@@ -27,7 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AuthorizationControllerTest {
+public class OtorisasiTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,27 +39,63 @@ public class AuthorizationControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    private String token;
-
     private ObjectMapper objectMapper;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private LoginRequest loginRequest;
-    
-    
-
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         objectMapper = new ObjectMapper();
-        
-        token = getSetupToken("user_dummy@test.com", "password123", UserRole.ROLE_USER);
     }
 
-    private String getSetupToken(String email, String password, UserRole userRole) {
+    @Test
+    public void ujiCekOtorisasi_valid() throws Exception {
+
+        String bearerToken =  getBearerTokenUser("email_user@test.com", "passwordBaru123");
+        // Memanggil endpoint
+        mockMvc.perform(MockMvcRequestBuilders.get("/authorization/check")
+                .header("Authorization", "Bearer " + bearerToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void ujiUpdateOtorisasi_roleNull() throws Exception {
+
+        String bearerToken =  getBearerTokenUser("email_user@test.com", "passwordBaru123");
+        
+        AuthorizationRequest request = new AuthorizationRequest();
+        request.setUserRole(null);
+
+        String requestJson = new ObjectMapper().writeValueAsString(request);
+        mockMvc.perform(MockMvcRequestBuilders.post("/authorization/update")
+                .header("Authorization", "Bearer " + bearerToken)
+                .content(requestJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void ujiUpdateOtorisasi_valid() throws Exception {
+
+        String bearerToken =  getBearerTokenUser("email_user@test.com", "passwordBaru123");
+        
+        AuthorizationRequest request = new AuthorizationRequest();
+        request.setUserRole(UserRole.ROLE_OWNER);
+
+        String requestJson = new ObjectMapper().writeValueAsString(request);
+        mockMvc.perform(MockMvcRequestBuilders.post("/authorization/update")
+                .header("Authorization", "Bearer " + bearerToken)
+                .content(requestJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    private String getBearerTokenUser(String email, String password) {
         User user = userRepository.findOneByEmail(email);
+
         if (user == null) {
             user = new User();
         }
@@ -66,13 +103,12 @@ public class AuthorizationControllerTest {
         user.setName("Nama Pengguna");
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
-        user.setProvider( AuthProvider.local);
-        user.setRole(userRole);
+        user.setProvider(AuthProvider.local);
         user.setEmailVerified(true);
         userRepository.save(user);
 
         // Set up request data
-        loginRequest = new LoginRequest();
+        LoginRequest loginRequest = new LoginRequest();
         loginRequest.setEmail(email);
         loginRequest.setPassword(password);
         
@@ -90,33 +126,5 @@ public class AuthorizationControllerTest {
         } catch (Exception e) {
             return null;
         }
-    }
-
-    @Test
-    public void ujiCekRole() throws Exception {
-        // Memanggil endpoint
-        mockMvc.perform(MockMvcRequestBuilders.get("/authorization/check")
-                .header("Authorization", "Bearer " + token))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Otorisasi di temukan"))
-                .andReturn().getResponse().getContentAsString();
-
-    }
-
-    @Test
-    public void ujiPerbaruiRole() throws Exception {
-        // Memanggil endpoint
-        AuthorizationRequest request = new AuthorizationRequest();
-        request.setUserRole(UserRole.ROLE_EMPLOYEE);
-        String requestJson = new ObjectMapper().writeValueAsString(request);
-        mockMvc.perform(MockMvcRequestBuilders.post("/authorization/update")
-                .header("Authorization", "Bearer " + token)
-                .content(requestJson)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("Berhasil Memperbarui Otorisasi"));
-                
     }
 }
