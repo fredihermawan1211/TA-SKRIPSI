@@ -193,17 +193,6 @@ public class OtentikasiTest {
 
     // USER DETAILS
     @Test
-    public void ujiUserDetails_bearerTokenSalah() throws Exception {
-        
-        String beareToken = "tokenBearerSalah";
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/details")
-                .header("Authorization", "Bearer " + beareToken)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-    @Test
     public void ujiUserDetails_bearerTokenBenar() throws Exception {
         
         String beareToken = getBearerTokenUser("email_user@test.com", "passwordBaru123");

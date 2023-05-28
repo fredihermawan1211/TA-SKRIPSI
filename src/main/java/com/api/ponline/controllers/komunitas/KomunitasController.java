@@ -19,10 +19,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.api.ponline.security.UserPrincipal;
+import com.api.ponline.controllers.user.UserController;
 import com.api.ponline.dao.Request.KomunitasRequest;
 import com.api.ponline.dao.Response.AbstractResponse;
 import com.api.ponline.dao.Response.ApiResponse;
+import com.api.ponline.model.Entity.komunitas.Anggota;
 import com.api.ponline.model.Entity.komunitas.Komunitas;
+import com.api.ponline.model.Entity.komunitas.StatusAnggota;
+import com.api.ponline.security.CurrentUser;
+import com.api.ponline.services.komunitas.AnggotaServices;
 import com.api.ponline.services.komunitas.KomunitasServices;
 
 // Anotasi RESTController untuk menandakan bahwa ini kelas rest controller
@@ -34,6 +40,12 @@ public class KomunitasController {
     // Inject komunitas service untuk memakai fungsi fungsi yg ada di kelas service
     @Autowired
     private KomunitasServices komunitasServices;
+
+    @Autowired
+    private AnggotaServices anggotaServices;
+
+    @Autowired
+    private UserController userController;
     
     // inject model mapper untuk memudahkan penyusunan data dari json yang di kirimkan frontend ke objek
     @Autowired
@@ -43,7 +55,7 @@ public class KomunitasController {
     // anotasi untuk menandakan metode yang di gunakan adalah POST
     @PostMapping
     @PreAuthorize("hasRole('OWNER')")
-    public ResponseEntity<AbstractResponse<Komunitas>> create(@Valid @RequestBody KomunitasRequest komunitasRequest, Errors errors ) {
+    public ResponseEntity<AbstractResponse<Komunitas>> create(@CurrentUser UserPrincipal userPrincipal, @Valid @RequestBody KomunitasRequest komunitasRequest, Errors errors ) {
         
         // Siapkan objek kosong untuk di kembalikan
         AbstractResponse<Komunitas> responseData = new AbstractResponse<>();
@@ -64,6 +76,14 @@ public class KomunitasController {
         Komunitas komunitas = modelMapper.map(komunitasRequest, Komunitas.class);
         responseData.setSuccess(true);
         responseData.setPayLoad(komunitasServices.save(komunitas));
+
+        // Create Anggota Owner
+        Anggota anggota = new Anggota();
+        anggota.setKomunitas(komunitas);
+        anggota.setUser(userController.getCurrentUser(userPrincipal));
+        anggota.setStatusAnggota(StatusAnggota.RESMI);
+        anggotaServices.save(anggota);
+
         return ResponseEntity.ok(responseData);       
 
     }
