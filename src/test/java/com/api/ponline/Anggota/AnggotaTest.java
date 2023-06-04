@@ -22,7 +22,7 @@ import com.api.ponline.model.Entity.komunitas.Anggota;
 import com.api.ponline.model.Entity.komunitas.StatusAnggota;
 import com.api.ponline.model.Entity.user.AuthProvider;
 import com.api.ponline.model.Entity.user.User;
-import com.api.ponline.model.repository.kolam.KolamRepo;
+import com.api.ponline.model.Entity.user.UserRole;
 import com.api.ponline.model.repository.komunitas.AnggotaRepo;
 import com.api.ponline.model.repository.komunitas.KomunitasRepo;
 import com.api.ponline.model.repository.user.UserRepository;
@@ -171,6 +171,7 @@ public class AnggotaTest {
         user.setPassword(passwordEncoder.encode(password));
         user.setProvider(AuthProvider.local);
         user.setEmailVerified(true);
+        user.setRole(UserRole.ROLE_OWNER);
         userRepository.save(user);
 
         // Set up request data

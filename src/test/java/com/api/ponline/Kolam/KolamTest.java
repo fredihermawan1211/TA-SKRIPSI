@@ -1,7 +1,5 @@
 package com.api.ponline.Kolam;
 
-import java.util.Date;
-
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,18 +16,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.api.ponline.dao.Request.AuthorizationRequest;
 import com.api.ponline.dao.Request.KolamRequest;
-import com.api.ponline.dao.Request.KomunitasRequest;
 import com.api.ponline.dao.Request.LoginRequest;
-import com.api.ponline.model.Entity.komunitas.Komunitas;
 import com.api.ponline.model.Entity.user.AuthProvider;
 import com.api.ponline.model.Entity.user.User;
 import com.api.ponline.model.Entity.user.UserRole;
 import com.api.ponline.model.repository.kolam.KolamRepo;
 import com.api.ponline.model.repository.komunitas.KomunitasRepo;
 import com.api.ponline.model.repository.user.UserRepository;
-import com.api.ponline.services.komunitas.KomunitasServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
@@ -149,6 +143,7 @@ public class KolamTest {
         user.setPassword(passwordEncoder.encode(password));
         user.setProvider(AuthProvider.local);
         user.setEmailVerified(true);
+        user.setRole(UserRole.ROLE_OWNER);
         userRepository.save(user);
 
         // Set up request data

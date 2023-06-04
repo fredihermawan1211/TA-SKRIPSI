@@ -20,6 +20,7 @@ import com.api.ponline.dao.Request.KomunitasRequest;
 import com.api.ponline.dao.Request.LoginRequest;
 import com.api.ponline.model.Entity.user.AuthProvider;
 import com.api.ponline.model.Entity.user.User;
+import com.api.ponline.model.Entity.user.UserRole;
 import com.api.ponline.model.repository.komunitas.KomunitasRepo;
 import com.api.ponline.model.repository.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -150,6 +151,7 @@ public class KomunitasTest {
         user.setPassword(passwordEncoder.encode(password));
         user.setProvider(AuthProvider.local);
         user.setEmailVerified(true);
+        user.setRole(UserRole.ROLE_OWNER);
         userRepository.save(user);
 
         // Set up request data

@@ -18,25 +18,16 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.api.ponline.dao.Request.AnggotaRequest;
-import com.api.ponline.dao.Request.AuthorizationRequest;
 import com.api.ponline.dao.Request.JadwalRequest;
-import com.api.ponline.dao.Request.KolamRequest;
-import com.api.ponline.dao.Request.KomunitasRequest;
 import com.api.ponline.dao.Request.LoginRequest;
 import com.api.ponline.model.Entity.jadwal.Jadwal;
-import com.api.ponline.model.Entity.komunitas.Anggota;
-import com.api.ponline.model.Entity.komunitas.Komunitas;
-import com.api.ponline.model.Entity.komunitas.StatusAnggota;
 import com.api.ponline.model.Entity.user.AuthProvider;
 import com.api.ponline.model.Entity.user.User;
 import com.api.ponline.model.Entity.user.UserRole;
 import com.api.ponline.model.repository.jadwal.JadwalRepo;
 import com.api.ponline.model.repository.kolam.KolamRepo;
 import com.api.ponline.model.repository.komunitas.AnggotaRepo;
-import com.api.ponline.model.repository.komunitas.KomunitasRepo;
 import com.api.ponline.model.repository.user.UserRepository;
-import com.api.ponline.services.komunitas.KomunitasServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
@@ -58,9 +49,6 @@ public class JadwalTest {
     
     @Autowired
     private JadwalRepo jadwalRepo;
-
-    @Autowired
-    private KomunitasRepo komunitasRepo;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -168,6 +156,7 @@ public class JadwalTest {
         user.setPassword(passwordEncoder.encode(password));
         user.setProvider(AuthProvider.local);
         user.setEmailVerified(true);
+        user.setRole(UserRole.ROLE_OWNER);
         userRepository.save(user);
 
         // Set up request data

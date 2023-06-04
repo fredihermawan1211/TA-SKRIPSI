@@ -105,6 +105,7 @@ public class OtorisasiTest {
         user.setPassword(passwordEncoder.encode(password));
         user.setProvider(AuthProvider.local);
         user.setEmailVerified(true);
+        user.setRole(UserRole.ROLE_OWNER);
         userRepository.save(user);
 
         // Set up request data
