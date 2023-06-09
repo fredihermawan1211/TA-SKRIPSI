@@ -96,7 +96,7 @@ public class InsertDataPokdakan {
             User user = new User();
             user.setEmail(listEmail[i]);
             user.setName(listName[i]);
-            user.setPassword(passwordEncoder.encode("Pw.Ponline01"));
+            user.setPassword(passwordEncoder.encode("Paw.Ponline01"));
             user.setEmailVerified(true);
             user.setProvider(AuthProvider.local);
             user.setRole(listEmail[i].equals("setiawan_adi_saputra@ponline.tech") ? UserRole.ROLE_OWNER : UserRole.ROLE_EMPLOYEE);
@@ -109,7 +109,7 @@ public class InsertDataPokdakan {
 
     @Test
     public void insertCreateKomunitas() throws Exception {
-        String bearerToken =  getBearerTokenUser("setiawan_adi_saputra@ponline.tech", "Pw.Ponline01");
+        String bearerToken =  getBearerTokenUser("setiawan_adi_saputra@ponline.tech", "Paw.Ponline01");
         
         KomunitasRequest komunitasRequest = new KomunitasRequest();
         komunitasRequest.setNama("Pokdakan Karya Bersama");
