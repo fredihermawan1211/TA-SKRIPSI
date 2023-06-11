@@ -10,7 +10,15 @@ public class LoginRequest {
     private String email;
 
     @NotBlank
-    private String password;
+    private String password;  
+    
+    public LoginRequest(@NotBlank @Email String email, @NotBlank String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public LoginRequest() {
+    }
 
     public String getEmail() {
         return email;

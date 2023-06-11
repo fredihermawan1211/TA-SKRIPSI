@@ -42,7 +42,6 @@ public class JadwalController {
     // anotasi untuk menandakan metode yang di gunakan adalah POST
     @PostMapping
     @PreAuthorize("hasRole('OWNER')")
-    // @PreAuthorize("hasRole('OWNER') || hasRole('PQOWNEDRETVY')")
     public ResponseEntity<AbstractResponse<Jadwal>> create(@Valid @RequestBody JadwalRequest jadwalRequest, Errors errors ) {
     
         // Siapkan objek kosong untuk di kembalikan

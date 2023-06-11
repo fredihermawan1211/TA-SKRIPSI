@@ -22,7 +22,7 @@ import com.api.ponline.dao.Request.LoginRequest;
 import com.api.ponline.model.Entity.user.AuthProvider;
 import com.api.ponline.model.Entity.user.User;
 import com.api.ponline.model.Entity.user.UserRole;
-import com.api.ponline.model.repository.user.UserRepository;
+import com.api.ponline.model.repository.user.UserRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
@@ -34,7 +34,7 @@ public class OtorisasiTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepo userRepository;
 
     @Autowired
     private WebApplicationContext webApplicationContext;

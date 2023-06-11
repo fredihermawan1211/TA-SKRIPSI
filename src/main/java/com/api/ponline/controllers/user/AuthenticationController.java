@@ -32,8 +32,8 @@ import com.api.ponline.dao.exception.ResourceNotFoundException;
 import com.api.ponline.model.Entity.user.AuthProvider;
 import com.api.ponline.model.Entity.user.User;
 import com.api.ponline.model.Entity.user.UserRole;
-import com.api.ponline.model.repository.user.UserRepository;
 import com.api.ponline.security.TokenProvider;
+import com.api.ponline.services.User.UserService;
 import com.api.ponline.util.PonTools;
 
 import net.bytebuddy.utility.RandomString;
@@ -48,7 +48,7 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -70,7 +70,7 @@ public class AuthenticationController {
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws UnsupportedEncodingException, MessagingException {
 
         // Cari user di database berdasarkan email
-        User user = userRepository.findOneByEmail(loginRequest.getEmail());
+        User user = userService.findOneByEmail(loginRequest.getEmail());
 
         // jika user ada di database
         if (user!=null) {
@@ -97,7 +97,7 @@ public class AuthenticationController {
                 // Buat token verifikasi email
                 String token = RandomString.make(64);
                 user.setTokEmailVerified(token);
-                userRepository.save(user);
+                userService.save(user);
                 
                 // Kirimkan link untuk verifikasi email (media:kirim email)
                 ponTools.sendMailWithButton(
@@ -126,7 +126,7 @@ public class AuthenticationController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) throws UnsupportedEncodingException, MessagingException {
         // Jika user sudah ada di database
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if(userService.existsByEmail(signUpRequest.getEmail())) {
             // Respon 500, pesan user sudah terdaftar
             throw new BadRequestException("Alamat email sudah terdaftar");
         }
@@ -149,7 +149,7 @@ public class AuthenticationController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         
         // Simpan user ke database
-        userRepository.save(user);
+        userService.save(user);
 
         // Kirimkan email verifikasi
         ponTools.sendMailWithButton(
@@ -172,15 +172,15 @@ public class AuthenticationController {
     @GetMapping("/verifymail")
     public ResponseEntity<?> verifymail(@RequestParam String token) {
         // Cek apakah user ada di database atau tidak
-        if(userRepository.findByTokEmailVerified(token).isEmpty()) {
+        if(userService.findByTokEmailVerified(token).isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(false, "User not Found"));
         }
 
         // Jika user ada setting email verifikasi = true
-        User user = userRepository.findByTokEmailVerified(token).get(0);
+        User user = userService.findByTokEmailVerified(token).get(0);
         user.setEmailVerified(true);
         user.setTokEmailVerified(null);
-        userRepository.save(user);
+        userService.save(user);
         // response 200
         return ResponseEntity.ok(new ApiResponse(true, "Berhasil memverifikasi email"));
     }
@@ -189,15 +189,15 @@ public class AuthenticationController {
     @GetMapping("/forgotpassword")
     public ResponseEntity<?> forgotpassword(@RequestParam String email, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
         // Cek user ada atau tidak
-        if(!userRepository.existsByEmail(email)) {
+        if(!userService.existsByEmail(email)) {
             throw new ResourceNotFoundException("User", "Email", email);
         }
         
         // jika ada, buat token untuk reset password
-        User user = userRepository.findOneByEmail(email);
+        User user = userService.findOneByEmail(email);
         String token = RandomString.make(64);
         user.setTokResetPassword(token);
-        userRepository.save(user);
+        userService.save(user);
 
         // Kirimkan link/token untuk reset password
         ponTools.sendMailWithButton(
@@ -221,15 +221,15 @@ public class AuthenticationController {
     @PostMapping("/resetpassword")
     public ResponseEntity<?> resetPasswordUser(@RequestParam String token, @Valid @RequestBody ResetPasswordRequest resetPasswordRequest) {
         // Cek user ada atau tidak
-        if(userRepository.findByTokResetPassword(token).isEmpty()) {
+        if(userService.findByTokResetPassword(token).isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(false, "User tidak di temukan"));
         }
 
         // Jika ada, ganti password menjadi password baru
-        User user = userRepository.findByTokResetPassword(token).get(0);
+        User user = userService.findByTokResetPassword(token).get(0);
         user.setPassword(passwordEncoder.encode(resetPasswordRequest.getPassword()));
         user.setTokResetPassword(null);
-        userRepository.save(user);
+        userService.save(user);
         
         // respon 200
         return ResponseEntity.ok(new ApiResponse(true, "Berhasil memperbarui password"));

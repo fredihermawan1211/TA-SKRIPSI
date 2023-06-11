@@ -3,8 +3,9 @@ package com.api.ponline.dao.Request;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
+
+import com.api.ponline.model.Entity.Anggota.Anggota;
 import com.api.ponline.model.Entity.kolam.Kolam;
-import com.api.ponline.model.Entity.komunitas.Anggota;
 
 public class JadwalRequest {
     private Long id;

@@ -18,14 +18,14 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.api.ponline.dao.Request.AnggotaRequest;
 import com.api.ponline.dao.Request.LoginRequest;
-import com.api.ponline.model.Entity.komunitas.Anggota;
-import com.api.ponline.model.Entity.komunitas.StatusAnggota;
+import com.api.ponline.model.Entity.Anggota.Anggota;
+import com.api.ponline.model.Entity.Anggota.StatusAnggota;
 import com.api.ponline.model.Entity.user.AuthProvider;
 import com.api.ponline.model.Entity.user.User;
 import com.api.ponline.model.Entity.user.UserRole;
-import com.api.ponline.model.repository.komunitas.AnggotaRepo;
+import com.api.ponline.model.repository.Anggota.AnggotaRepo;
 import com.api.ponline.model.repository.komunitas.KomunitasRepo;
-import com.api.ponline.model.repository.user.UserRepository;
+import com.api.ponline.model.repository.user.UserRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
@@ -37,7 +37,7 @@ public class AnggotaTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepo userRepository;
 
     @Autowired
     private AnggotaRepo anggotaRepo;

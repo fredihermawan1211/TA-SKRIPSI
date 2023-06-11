@@ -12,16 +12,16 @@ import com.api.ponline.dao.Response.ApiResponse;
 import com.api.ponline.dao.Response.AuthorizationResponse;
 import com.api.ponline.dao.exception.ResourceNotFoundException;
 import com.api.ponline.model.Entity.user.User;
-import com.api.ponline.model.repository.user.UserRepository;
 import com.api.ponline.security.CurrentUser;
 import com.api.ponline.security.UserPrincipal;
+import com.api.ponline.services.User.UserService;
 
 @RestController
 @RequestMapping("/authorization")
 public class AuthtorizationController {
     
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping("/check")
     public AuthorizationResponse checkUserRole(@CurrentUser UserPrincipal userPrincipal) {
@@ -48,8 +48,8 @@ public class AuthtorizationController {
         User user = getCurrentUser(userPrincipal);
         if (user != null) {
             user.setRole(authorizationRequest.getUserRole());
-            userRepository.save(user);
-            if (userRepository.findOneById(user.getId()).getRole().equals(authorizationRequest.getUserRole())) {
+            userService.save(user);
+            if (userService.findOneById(user.getId()).getRole().equals(authorizationRequest.getUserRole())) {
                 response.setSuccess(true);
                 response.setMessage("Berhasil Memperbarui Otorisasi");
             }
@@ -59,7 +59,7 @@ public class AuthtorizationController {
     }
 
     public User getCurrentUser(UserPrincipal userPrincipal) {
-        return userRepository.findById(userPrincipal.getId())
+        return userService.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }
 }

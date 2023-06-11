@@ -1,4 +1,4 @@
-package com.api.ponline.services.komunitas;
+package com.api.ponline.services.Anggota;
 
 import java.util.List;
 
@@ -7,10 +7,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.api.ponline.model.Entity.komunitas.Anggota;
+import com.api.ponline.model.Entity.Anggota.Anggota;
 import com.api.ponline.model.Entity.komunitas.Komunitas;
 import com.api.ponline.model.Entity.user.User;
-import com.api.ponline.model.repository.komunitas.AnggotaRepo;
+import com.api.ponline.model.repository.Anggota.AnggotaRepo;
 
 // Anotasi Bahwa ini adalah kelas service
 @Service

@@ -32,19 +32,6 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    # Konfigurasi Keamanan Program (spring.oauth2)
-    security:
-      oauth2:
-        client:
-          registration:
-            # Konfigurasi Client id & Secret Google Console
-            google:
-              clientId: 371012063788-tmgdcartpq5p3ht4mu1a79vjam9st1sv.apps.googleusercontent.com
-              clientSecret: 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
-              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
-              scope:
-                - email
-                - profile
 app:
   auth:
     tokenSecret: PQOWNELRITNYEUSIEOCPRQEWTEKRETYYU # Base token untuk akses pengguna

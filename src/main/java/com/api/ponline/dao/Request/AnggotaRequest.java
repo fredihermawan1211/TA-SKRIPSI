@@ -2,8 +2,8 @@ package com.api.ponline.dao.Request;
 
 import javax.validation.constraints.NotNull;
 
+import com.api.ponline.model.Entity.Anggota.StatusAnggota;
 import com.api.ponline.model.Entity.komunitas.Komunitas;
-import com.api.ponline.model.Entity.komunitas.StatusAnggota;
 import com.api.ponline.model.Entity.user.User;
 
 public class AnggotaRequest {

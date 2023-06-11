@@ -11,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.api.ponline.model.Entity.Anggota.Anggota;
 import com.api.ponline.model.Entity.kolam.Kolam;
-import com.api.ponline.model.Entity.komunitas.Anggota;
 
 @Entity
 @Table(name = "TAB_JADWAL")

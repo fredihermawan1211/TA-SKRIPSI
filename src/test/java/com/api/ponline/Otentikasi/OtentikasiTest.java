@@ -22,7 +22,7 @@ import com.api.ponline.dao.Request.SignUpRequest;
 import com.api.ponline.model.Entity.user.AuthProvider;
 import com.api.ponline.model.Entity.user.User;
 import com.api.ponline.model.Entity.user.UserRole;
-import com.api.ponline.model.repository.user.UserRepository;
+import com.api.ponline.model.repository.user.UserRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -37,7 +37,7 @@ public class OtentikasiTest {
     private WebApplicationContext webApplicationContext;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepo userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

@@ -15,11 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.api.ponline.security.oauth2.CustomOAuth2UserService;
-import com.api.ponline.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
-import com.api.ponline.security.oauth2.OAuth2AuthenticationFailureHandler;
-import com.api.ponline.security.oauth2.OAuth2AuthenticationSuccessHandler;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -32,26 +27,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    @Autowired
-    private CustomOAuth2UserService customOAuth2UserService;
-
-    @Autowired
-    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-
-    @Autowired
-    private OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
-
     // @Autowired
     // private HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
         return new TokenAuthenticationFilter();
-    }
-    
-    @Bean
-    public HttpCookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
-        return new HttpCookieOAuth2AuthorizationRequestRepository();
     }
 
     @Override
@@ -103,30 +84,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.pdf",
                         "/**/*.js")
                         .permitAll()
-                    .antMatchers("/authentication/**", "/oauth2/**", "/documentation/**", "/uji/**")
+                    .antMatchers("/authentication/**", "/oauth2/**", "/documentation/**")
                         .permitAll()
                     .antMatchers("/anggota/update/**")
                         .hasAuthority("ROLE_OWNER")
                     .antMatchers("/komunitas/**", "/anggota/**", "/kolam/**", "/jadwal/**")
-                        .hasAnyAuthority("ROLE_OWNER", "ROLE_EMPLOYEE", "ROLE_PQOWNEDRETVY")
+                        .hasAnyAuthority("ROLE_OWNER", "ROLE_EMPLOYEE")
                     .antMatchers("/user/**")
-                        .hasAnyAuthority("ROLE_USER", "ROLE_OWNER", "ROLE_EMPLOYEE", "ROLE_PQOWNEDRETVY")
+                        .hasAnyAuthority("ROLE_USER", "ROLE_OWNER", "ROLE_EMPLOYEE")
                     .anyRequest()
                         .authenticated()
-                    .and()
-                .oauth2Login()
-                    .authorizationEndpoint()
-                        .baseUri("/oauth2/authorize")
-                        .authorizationRequestRepository(cookieAuthorizationRequestRepository())
-                        .and()
-                    .redirectionEndpoint()
-                        .baseUri("/oauth2/callback/*")
-                        .and()
-                    .userInfoEndpoint()
-                        .userService(customOAuth2UserService)
-                        .and()
-                    .successHandler(oAuth2AuthenticationSuccessHandler)
-                    .failureHandler(oAuth2AuthenticationFailureHandler)
                     .and()
                 .headers()
                     .frameOptions().and().contentSecurityPolicy("frame-ancestors 'self'");

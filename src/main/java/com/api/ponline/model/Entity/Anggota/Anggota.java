@@ -1,4 +1,4 @@
-package com.api.ponline.model.Entity.komunitas;
+package com.api.ponline.model.Entity.Anggota;
 
 import java.io.Serializable;
 
@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.api.ponline.model.Entity.komunitas.Komunitas;
 import com.api.ponline.model.Entity.user.User;
 
 @Entity

@@ -23,7 +23,7 @@ import com.api.ponline.model.Entity.user.User;
 import com.api.ponline.model.Entity.user.UserRole;
 import com.api.ponline.model.repository.kolam.KolamRepo;
 import com.api.ponline.model.repository.komunitas.KomunitasRepo;
-import com.api.ponline.model.repository.user.UserRepository;
+import com.api.ponline.model.repository.user.UserRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
@@ -35,7 +35,7 @@ public class KolamTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepo userRepository;
 
     @Autowired
     private KolamRepo kolamRepo;

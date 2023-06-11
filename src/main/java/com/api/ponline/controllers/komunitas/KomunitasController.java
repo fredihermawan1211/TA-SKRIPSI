@@ -19,16 +19,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.ponline.security.UserPrincipal;
-import com.api.ponline.controllers.user.UserController;
 import com.api.ponline.dao.Request.KomunitasRequest;
 import com.api.ponline.dao.Response.AbstractResponse;
 import com.api.ponline.dao.Response.ApiResponse;
-import com.api.ponline.model.Entity.komunitas.Anggota;
+import com.api.ponline.model.Entity.Anggota.Anggota;
+import com.api.ponline.model.Entity.Anggota.StatusAnggota;
 import com.api.ponline.model.Entity.komunitas.Komunitas;
-import com.api.ponline.model.Entity.komunitas.StatusAnggota;
 import com.api.ponline.security.CurrentUser;
-import com.api.ponline.services.komunitas.AnggotaServices;
+import com.api.ponline.security.UserPrincipal;
+import com.api.ponline.services.Anggota.AnggotaServices;
+import com.api.ponline.services.User.UserService;
 import com.api.ponline.services.komunitas.KomunitasServices;
 
 // Anotasi RESTController untuk menandakan bahwa ini kelas rest controller
@@ -45,7 +45,7 @@ public class KomunitasController {
     private AnggotaServices anggotaServices;
 
     @Autowired
-    private UserController userController;
+    private UserService userService;
     
     // inject model mapper untuk memudahkan penyusunan data dari json yang di kirimkan frontend ke objek
     @Autowired
@@ -80,7 +80,7 @@ public class KomunitasController {
         // Create Anggota Owner
         Anggota anggota = new Anggota();
         anggota.setKomunitas(komunitas);
-        anggota.setUser(userController.getCurrentUser(userPrincipal));
+        anggota.setUser(userService.getCurrentUser(userPrincipal));
         anggota.setStatusAnggota(StatusAnggota.RESMI);
         anggotaServices.save(anggota);
 
