@@ -84,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.pdf",
                         "/**/*.js")
                         .permitAll()
-                    .antMatchers("/authentication/**", "/oauth2/**", "/documentation/**")
+                    .antMatchers("/authentication/**", "/oauth2/**", "/documentation/**", "/scim/**")
                         .permitAll()
                     .antMatchers("/anggota/update/**")
                         .hasAuthority("ROLE_OWNER")
